@@ -49,7 +49,7 @@ $insertion_output = mysqli_query($Connection, $insertion_query);
    }
     else{
      echo "User details successfully inserted";
-     header("location:Login.php");
+     header("location:Login1.php");
    }
 }
 ?>

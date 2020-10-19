@@ -1,29 +1,42 @@
 <!DOCTYPE html>
 <head>
 <title>User Registration</title>
+<style>
+
+body {
+margin-top:10%;
+background-image: url("307818.jpg");
+background-size:cover;
+text-align:center;
+}
+
+</style>
 </head>
 <body>
-<p>Please fill the following form to register your id</p>
+
+<p>User Registration</p>
 <form action="" method="POST">
+<div class="content">
 <p>
-<label>Username</label>
- <input type="text" id="Username" name="Username" >
+<label>Username<font color="red">*</font>:</label>
+ <input type="text" id="Username" name="Username" placeholder = "Username" >
 </p>
 <p>
-<label>Password</label>
- <input type="password" id ="Password" name="Password">
+<label>Password<font color="red">*</font>:</label> 
+ <input type="password" id ="Password" name="Password" placeholder = "Password">
 </p>
 <p>
-<input type="submit"  name="Register" value="Register">
+<input type="submit"  name="Register" value="Submit">
 </p>
 </form>
+</div>
 
 <?php
 #only if submit button is clicked
 if(isset($_POST['Register'])){
 $Username=$_POST['Username'];
 $Password=$_POST['Password'];
-$database="userregistration";
+$database="Fantasyfootball";
 # ensure empty values cannot be entered
 if(empty($Username) || (strlen($Username) < 5) ||empty($Password) ||(strlen($Password) < 5)){
     echo "One of the following conditions not met: <br> 1. User name  or password cannot be empty or <br> 2. username or password cannot be less than 5 characters";
@@ -57,10 +70,12 @@ else
     else{
      echo "Username successfully inserted";
      session_start();
-     $_SESSION['Username']=$Username;
-$_SESSION['Password']=$Password;
-header("location:UserDetails.php");
-}
+     $_SESSION['Username'] = $Username;
+     $_SESSION['Password'] = $Password;
+#echo "<script>document.getElementById('msg').value=.echo </script>";
+     header("location:UserDetails.php"); 
+   }
+
 }
 mysqli_close($Connection);
 }
@@ -68,4 +83,5 @@ mysqli_close($Connection);
 ?>
 </body>
 </html>
+
 

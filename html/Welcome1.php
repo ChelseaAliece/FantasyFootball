@@ -1,21 +1,93 @@
 <!DOCTYPE html>
 <head>
 	<title>Welcome to Fantasy football</title>
+<style>
+body {
+margin-top:10%;
+margin-left: 35%;
+background-image: url("temp1.jpg");
+background-size:cover;
+text-align:center;
+}
+.btn {
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 45px;
+  max-width: 160px;
+  position: relative;
+  text-decoration: none;
+  text-transform: uppercase;
+text-color:white;
+  width: 100%;
+}
+.btn:hover {
+  text-decoration: none;
+}
+
+/*btn_background*/
+.effect04 {
+  --uismLinkDisplay: var(--smLinkDisplay, inline-flex);
+  display: var(--uismLinkDisplay);
+  color: #000;
+  outline: solid  2px #000;
+  position: relative;
+  transition-duration: 0.4s;
+  overflow: hidden;
+}
+
+.effect04::before,
+.effect04 span{
+    margin: 0 auto;
+	transition-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+	transition-duration: 0.4s;
+}
+
+.effect04:hover{
+
+  background-color: #000;
+}
+
+.effect04:hover span{
+  -webkit-transform: translateY(-400%) scale(-0.1,20);
+          transform: translateY(-400%) scale(-0.1,20);
+}
+
+.effect04::before{
+  content: attr(data-sm-link-text);
+	color: #FFF;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  -webkit-transform: translateY(500%) scale(-0.1,20);
+          transform: translateY(500%) scale(-0.1,20);
+}
+
+.effect04:hover::before{
+  letter-spacing: 0.05em;
+  -webkit-transform: translateY(0) scale(1,1);
+          transform: translateY(0) scale(1,1);
+}
+
+</style>
+
 </head>
 <body>
 <form action="" method="POST" > 
 	<div class="split left">
 	<table>
-	<tr><td><p> You can draft the players here </p></td></tr>
-	<tr><td><a href="Draft1.php">Draft</a></td>
+	<tr><td><p style="font-size:160%;"> You can draft the players here </p></td></tr>
+	<tr><td><a href="Draft1.php" class="btn effect04" data-sm-link-text="CLICK"><span>DRAFT</span></a></td>
 </p></td></tr>
-	<tr><td><p>To view your profile information</p></td></tr>
-	<tr><td><a href="RetrieveUser.php">Click here</a></td></tr>
- <tr><td><p>After drafting your team, you can retrieve their details here</p></td></tr>
-        <tr><td><a href="RetrieveTeam.php">Click here</a></td></tr>
+	<tr><td><p style="font-size:160%;">To view your profile information</p></td></tr>
+	<tr><td><a href="RetrieveUser.php" class="btn effect04" data-sm-link-text="CLICK"><span>Player Info</span></a></td></tr>
+ <tr><td><p style="font-size:160%;">Get Player Details Here</p></td></tr>
+        <tr><td><a href="RetrieveTeam.php" class="btn effect04" data-sm-link-text="CLICK"><span>View Details</span></a></td></tr>
 
-<tr><td><p>Week by week scoring of the leaderboard</p></td></tr>
-        <tr><td><a href="Scoring.php">Click here</a></td></tr>
+<tr><td><p style="font-size:160%;">Week by week scoring of the leaderboard</p></td></tr>
+        <tr><td><a href="Scoring.php" class="btn effect04" data-sm-link-text="CLICK"><span>Leaderboards</span></a></td></tr>
 
 	</table>
 	</div>
@@ -23,10 +95,8 @@
 <!--	<div class="split right">
 	<p> The list of players </p>-->
 <?php
-session_start();
+#session_start();
 # check if user is logged in
-$uname = $_SESSION["Username"];
-echo "Your username is: $uname"; 
 /*if(!isset($_SESSION['Úsername'])){
      header("Location: Login.php");
 }*/
@@ -69,4 +139,5 @@ $output = mysqli_query($Connection, $selection_query);
 
 </body>
 </html>
+
 
