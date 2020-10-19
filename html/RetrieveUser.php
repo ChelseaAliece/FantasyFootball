@@ -24,7 +24,7 @@
 if(isset($_POST['Submit'])){
 
 echo "Here are the details saved for you <br>";
-$database="userregistration";
+$database="Fantasyfootball";
 $Username=$_POST['Username'];
 $Password=$_POST['Password'];
 //get username and data from session
