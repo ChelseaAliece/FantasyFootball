@@ -6,17 +6,22 @@ session_start();
      header("Location: Login.php");
 }*/
 
-$database="Fantasyfootball";
+$database="fantasyfootball";
+$Connection = mysqli_init();
 $Username=$_SESSION["Username"];
 
 #echo "Attempting to connect to dbms\n";
-$Connection=mysqli_connect("127.0.0.1","root","storm123!") or die("Database connection failed. Please check your connection");
+mysqli_real_connect($Connection, 'ganttca.mysql.database.azure.com', 'ganttca@ganttca', 'Storm123!', 'fantasyfootball', 3306, MYSQLI_CLIENT_SSL);
+if (mysqli_connect_errno($Connection)) {
+       die('Failed to connect to MySQL: '.mysqli_connect_error());
+ }
+// $Connection=mysqli_connect("127.0.0.1","root","storm123!") or die("Database connection failed. Please check your connection");
 #echo "Connected to Mariadb\n";
 mysqli_select_db($Connection, $database) or die("Database not found");
 #echo "Connected to database $database\n";
 
 # current user
-$joinquery="select p.Player as Player, p.Team as Team, p.position as Position from SelectedPlayers s, PlayerInformation p where s.Username='$Username' and s.Player = p.Player";
+$joinquery="select p.Player as Player, p.Team as Team, p.position as Position from selectedplayers s, playerinformation p where s.Username='$Username' and s.Player = p.Player";
 $output=mysqli_query($Connection, $joinquery);
    if(mysqli_error($Connection)){
      echo "Error in data extraction. Check query";
@@ -49,13 +54,13 @@ echo "</tr>";
 	   $other = $_POST['Username'];
 	   
 	   echo "Team Details of User: $other:<br/>";
-	   $joinquery="select p.Player as Player, p.Team as Team, p.position as Position from SelectedPlayers s, PlayerInformation p where s.Username='$other' and s.Player = p.Player";
+	   $joinquery="select p.Player as Player, p.Team as Team, p.position as Position from selectedplayers s, playerinformation p where s.Username='$other' and s.Player = p.Player";
 $output=mysqli_query($Connection, $joinquery);
    if(mysqli_error($Connection)){
      echo "Error in data extraction. Check query";
    }
     else{
-	    $query_data=mysqli_fetch_array($query_output);
+	    $query_data=mysqli_fetch_array($output);
 	    echo "<table class=\"anytable\">
      		    <tr>
                     <th> Player </th>

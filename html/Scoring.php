@@ -6,16 +6,21 @@ session_start();
      header("Location: Login.php");
 }*/
 
-$database="Fantasyfootball";
+$database="fantasyfootball";
+$Connection = mysqli_init();
 
 #echo "Attempting to connect to dbms\n";
-$Connection=mysqli_connect("127.0.0.1","root","storm123!") or die("Database connection failed. Please check your connection");
+mysqli_real_connect($Connection, 'ganttca.mysql.database.azure.com', 'ganttca@ganttca', 'Storm123!', 'fantasyfootball', 3306, MYSQLI_CLIENT_SSL);
+if (mysqli_connect_errno($Connection)) {
+       die('Failed to connect to MySQL: '.mysqli_connect_error());
+ }
+// $Connection=mysqli_connect("127.0.0.1","root","storm123!") or die("Database connection failed. Please check your connection");
 #echo "Connected to Mariadb\n";
 mysqli_select_db($Connection, $database) or die("Database not found");
 #echo "Connected to database $database\n";
 
 # current user
-$joinquery="SELECT S.Username as Uname, Sum(T.Week1) as W1,Sum(T.Week2) as W2,Sum(T.Week3) as W3,Sum(T.Week4) as W4,Sum(T.Week5) as W5,Sum(T.Week6) as W6,Sum(T.Week7) as W7,Sum(T.Week8) as W8,Sum(T.Week9) as W9,Sum(T.Week10) as W10,Sum(T.Week11) as W11,Sum(T.Week12) as W12,Sum(T.Week13) as W13,Sum(T.Week14) as W14,Sum(T.Week15) as W15,Sum(T.Week16) as W16,Sum(T.Week17) as W17  FROM `Teams` T, SelectedPlayers S, PlayerInformation P WHERE T.Team=P.Team and S.Player=P.Player GROUP BY S.Username";
+$joinquery="SELECT S.Username as Uname, Sum(T.Week1) as W1,Sum(T.Week2) as W2,Sum(T.Week3) as W3,Sum(T.Week4) as W4,Sum(T.Week5) as W5,Sum(T.Week6) as W6,Sum(T.Week7) as W7,Sum(T.Week8) as W8,Sum(T.Week9) as W9,Sum(T.Week10) as W10,Sum(T.Week11) as W11,Sum(T.Week12) as W12,Sum(T.Week13) as W13,Sum(T.Week14) as W14,Sum(T.Week15) as W15,Sum(T.Week16) as W16,Sum(T.Week17) as W17  FROM `Teams` T, selectedplayers S, playerinformation P WHERE T.Team=P.Team and S.Player=P.Player GROUP BY S.Username";
 $output=mysqli_query($Connection, $joinquery);
    if(mysqli_error($Connection)){
      echo "Error in data extraction. Check query";

@@ -131,8 +131,14 @@ session_start();
      header("Location: Login.php");
 }*/
 
-$database="Fantasyfootball";
-           $username = $_SESSION['Username'];
+// $host = 'ganttca.mysql.database.azure.com';
+// $username = 'ganttca@ganttca';
+// $password = 'Storm123!';
+$database = 'fantasyfootball';
+$conn = mysqli_init();
+
+// $database="fantasyfootball";
+//            $username = $_SESSION['Username'];
 	   if(isset($_POST["Add"])){
 		   #echo "You have chosen to add the following players:<br/>";
 		   $qb_count = count($_POST["QB"]);
@@ -145,13 +151,17 @@ $database="Fantasyfootball";
                            echo "<script>alert(\"You need to choose 1 QB, 2 RB, 2 WR and 1 TE\"); </script>";
 		   }
 		   else{
-			   $Connection1=mysqli_connect("127.0.0.1","root","storm123!") or die("Database connection failed. Please check your connection");
+        //  $Connection1=mysqli_connect("127.0.0.1","root","storm123!") or die("Database connection failed. Please check your connection");
+         mysqli_real_connect($conn, 'ganttca.mysql.database.azure.com', 'ganttca@ganttca', 'Storm123!', 'fantasyfootball', 3306, MYSQLI_CLIENT_SSL);
+         if (mysqli_connect_errno($conn)) {
+                die('Failed to connect to MySQL: '.mysqli_connect_error());
+          }
 			   #echo "Connected to Mariadb\n";
-			   mysqli_select_db($Connection1, $database) or die("Database not found");
+			   mysqli_select_db($conn, $database) or die("Database not found");
 			   foreach($all_outputs as $pname){
-				   $insertion_query = "insert into SelectedPlayers(Username,Player) values('$username', '$pname')";
-				   $insertion_output = mysqli_query($Connection1, $insertion_query);
-				   if(mysqli_error($Connection1)){
+				   $insertion_query = "insert into selectedplayers(Username,Player) values('$username', '$pname')";
+				   $insertion_output = mysqli_query($conn, $insertion_query);
+				   if(mysqli_error($conn)){
 					   echo "Error in insertion. Check query";
 				   }
 				   
@@ -200,13 +210,23 @@ $database="Fantasyfootball";
 
 
 <?php		
+// $host = 'ganttca.mysql.database.azure.com';
+// $username = 'ganttca@ganttca';
+// $password = 'Storm123!';
+$database = 'fantasyfootball';
+$conn = mysqli_init();
+
 #only if Draft button is clicked
 $ptypes=array("QB", "RB", "WR", "TE");
 
 #echo "Attempting to connect to dbms\n";
-$Connection=mysqli_connect("127.0.0.1","root","storm123!") or die("Database connection failed. Please check your connection");
+mysqli_real_connect($conn, 'ganttca.mysql.database.azure.com', 'ganttca@ganttca', 'Storm123!', 'fantasyfootball', 3306, MYSQLI_CLIENT_SSL);
+if (mysqli_connect_errno($conn)) {
+       die('Failed to connect to MySQL: '.mysqli_connect_error());
+ }
+// $Connection=mysqli_connect("127.0.0.1","root","storm123!") or die("Database connection failed. Please check your connection");
 #echo "Connected to Mariadb\n";
-mysqli_select_db($Connection, $database) or die("Database not found");
+mysqli_select_db($conn, $database) or die("Database not found");
 #echo "Connected to database $database\n";
 echo "Ënter your search phrase (name) here.";
 echo "<input type = \"text\" id=\"searchText\"><br/>";
@@ -215,12 +235,12 @@ echo "<input type = \"text\" id=\"searchText\"><br/>";
 #echo "<button id=\"Reset\" name=\"Reset\" onclick=\"window.location.reload();\">Click Here To Refresh</button><br/>"; 
 foreach($ptypes as $ptype){
 #extract from table
-	$selection_query = "select * from PlayerInformation where Position='$ptype'";
+	$selection_query = "select * from playerinformation where Position='$ptype'";
 
 
 
-$output = mysqli_query($Connection, $selection_query);
-   if(mysqli_error($Connection)){
+$output = mysqli_query($conn, $selection_query);
+   if(mysqli_error($conn)){
      echo "Error in data extraction. Check query";
    }
    else{
