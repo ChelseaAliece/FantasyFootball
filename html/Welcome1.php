@@ -79,15 +79,15 @@ text-color:white;
 	<div class="split left">
 	<table>
 	<tr><td><p style="font-size:160%;"> You can draft the players here </p></td></tr>
-	<tr><td><a href="Draft1.php" class="btn effect04" data-sm-link-text="CLICK"><span>DRAFT</span></a></td>
+	<tr><td><a href="Draft1.php" class="btn effect04" data-sm-link-text="CLICK"><span>Draft Players</span></a></td>
 </p></td></tr>
 	<tr><td><p style="font-size:160%;">To view your profile information</p></td></tr>
-	<tr><td><a href="RetrieveUser.php" class="btn effect04" data-sm-link-text="CLICK"><span>Player Info</span></a></td></tr>
+	<tr><td><a href="RetrieveUser.php" class="btn effect04" data-sm-link-text="CLICK"><span>Player Infomation</span></a></td></tr>
  <tr><td><p style="font-size:160%;">Get Player Details Here</p></td></tr>
-        <tr><td><a href="RetrieveTeam.php" class="btn effect04" data-sm-link-text="CLICK"><span>View Details</span></a></td></tr>
+        <tr><td><a href="RetrieveTeam.php" class="btn effect04" data-sm-link-text="CLICK"><span>View Player Details</span></a></td></tr>
 
 <tr><td><p style="font-size:160%;">Week by week scoring of the leaderboard</p></td></tr>
-        <tr><td><a href="Scoring.php" class="btn effect04" data-sm-link-text="CLICK"><span>Leaderboards</span></a></td></tr>
+        <tr><td><a href="Scoring.php" class="btn effect04" data-sm-link-text="CLICK"><span>Weekly Leaderboards</span></a></td></tr>
 
 	</table>
 	</div>
