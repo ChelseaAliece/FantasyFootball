@@ -1,24 +1,3 @@
-<!DOCTYPE html>
-<head>
-<title>User Registration</title>
-</head>
-<body>
-<p>Please enter your user id and password to retrieve your information</p>
-<form action="" method="POST">
-<p>
-<label>Username</label>
- <input type="text" id="Username" name="Username" >
-</p>
-<p>
-<label>Password</label>
- <input type="password" id ="Password" name="Password">
-</p>
-<p>
-<input type="submit"  name="Submit" value="Submit">
-</p>
-</form>
-
-
 <?php
 #only if submit button is clicked
 if(isset($_POST['Submit'])){
@@ -30,7 +9,7 @@ $Password=$_POST['Password'];
 //get username and data from session
 
 #echo "Attempting to connect to dbms\n";
-$Connection=mysqli_connect("localhost","root","deepthi123") or die("Database connection failed. Please check your connection");
+$Connection=mysqli_connect("127.0.0.1","root","storm123!") or die("Database connection failed. Please check your connection");
 #echo "Connected to Mariadb\n";
 mysqli_select_db($Connection, $database) or die("Database not found");
 #echo "Connected to database $database\n";
@@ -68,6 +47,25 @@ echo "Invalid username and/or password. Please try again";
 }
 ?>
 
+<!DOCTYPE html>
+<head>
+<title>User Registration</title>
+</head>
+<body>
+<p>Please enter your user id and password to retrieve your information</p>
+<form action="" method="POST">
+<p>
+<label>Username</label>
+ <input type="text" id="Username" name="Username" >
+</p>
+<p>
+<label>Password</label>
+ <input type="password" id ="Password" name="Password">
+</p>
+<p>
+<input type="submit"  name="Submit" value="Submit">
+</p>
+</form>
 </body>
 </html>
 

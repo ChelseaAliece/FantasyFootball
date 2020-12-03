@@ -1,33 +1,3 @@
-<!DOCTYPE html>
-<head>
-<style>
-.anytable{
-width: 100%;
-border: 0.5px solid black;
-font-size:12px;
-border-collapse: collapse;
-}
-.anytable th{
-padding: 10px;
-text-align: center;
-border: 0.5px solid black;
-border-collapse: collapse;
-}
-.anytable td{
-padding: 10px;
-text-align: center;
-border: 0.5px solid black;
-border-collapse: collapse;
-}
-.anytable tr:hover{
-background-color: #f5f5f5;
-}
-</style>
-<title>Leaderboard</title>
-</head>
-<body>
-<p>Fantasy Football Leaderboard For Each Week</p>
-
 <?php
 #only if submit button is clicked
 session_start();
@@ -39,7 +9,7 @@ session_start();
 $database="Fantasyfootball";
 
 #echo "Attempting to connect to dbms\n";
-$Connection=mysqli_connect("localhost","root","deepthi123") or die("Database connection failed. Please check your connection");
+$Connection=mysqli_connect("127.0.0.1","root","storm123!") or die("Database connection failed. Please check your connection");
 #echo "Connected to Mariadb\n";
 mysqli_select_db($Connection, $database) or die("Database not found");
 #echo "Connected to database $database\n";
@@ -52,7 +22,7 @@ $output=mysqli_query($Connection, $joinquery);
    }
    else{
 	  # echo "Your team information<br/>";
-	    $query_data=mysqli_fetch_array($query_output);
+	    $query_data=mysqli_fetch_array($output);
 	    echo "<table class=\"anytable\">
      		    <tr>
                     <th> User/Fantasy Team</th>
@@ -120,6 +90,35 @@ echo "</tr>";
 
 ?>
 
+<!DOCTYPE html>
+<head>
+<style>
+.anytable{
+width: 100%;
+border: 0.5px solid black;
+font-size:12px;
+border-collapse: collapse;
+}
+.anytable th{
+padding: 10px;
+text-align: center;
+border: 0.5px solid black;
+border-collapse: collapse;
+}
+.anytable td{
+padding: 10px;
+text-align: center;
+border: 0.5px solid black;
+border-collapse: collapse;
+}
+.anytable tr:hover{
+background-color: #f5f5f5;
+}
+</style>
+<title>Leaderboard</title>
+</head>
+<body>
+<p>Fantasy Football Leaderboard For Each Week</p>
 </body>
 </html>
 

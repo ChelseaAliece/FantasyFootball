@@ -1,3 +1,7 @@
+<?php
+session_start();?>
+
+<!-- 
 <!DOCTYPE html>
 <head>
 <style>
@@ -18,6 +22,102 @@ padding: 10px;
 text-align: center;
 border: 0.5px solid black;
 border-collapse: collapse;
+}
+.anytable tr:hover{
+background-color: #f5f5f5;
+}
+
+</style>
+
+</head>
+
+<body>
+<form action="" method="POST">
+<p>Please click here to draft the players</p>
+
+</form>
+<script type="text/javascript">
+ 
+ document.getElementById("searchText").onkeyup = function(){
+  player_tables = document.querySelectorAll("table[data-name=anytable]");
+  search_query = document.getElementById("searchText").value.toLowerCase();
+  if(search_query.length > 0){
+	 //if(search_query.length > 5){ 
+	 // console.log(search_query);
+	  player_tables.forEach(function(sub_table){
+		  row_collection = sub_table.getElementsByTagName("tr");
+		  //console.log(row_collection.length);
+		  for(var j = 0; j < row_collection.length; j++){
+			  //console.log(j);
+			  pname = row_collection[j].getElementsByTagName("td")[1];
+			 if(pname){
+				 pname_str = pname.innerHTML.toLowerCase();
+				 console.log(pname_str);
+			         if(pname_str.includes(search_query)){
+                                       //matching
+				      row_collection[j].style.display = "";      
+				 }
+				 else{
+                                       //not matching
+				      row_collection[j].style.display = "none";      
+                                    
+				 }
+			 }
+		  }
+	  });  
+  }
+  else{
+         //rest to original when emptysearch
+	  player_tables.forEach(function(sub_table){
+		  row_collection = sub_table.getElementsByTagName("tr");
+		  //console.log(row_collection.length);
+		  for(var j = 0; j < row_collection.length; j++){
+			  //console.log(j);
+			         if(row_collection[j].style.display=="none"){
+                                       //matching
+				      row_collection[j].style.display = "";      
+		 			 }
+		  }
+	  });  
+
+
+
+  }
+ }
+	/*
+document.getElementById("Reset").onclick = function(){
+	console.log("reset selected");
+	location.reload();		
+}*/
+</script>
+</body>
+</html>
+ -->
+
+<!DOCTYPE html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<style>
+.anytable{
+width: 100%;
+border: 0.5px solid black;
+font-size:12px;
+border-collapse: collapse;
+}
+.anytable th{
+padding: 10px;
+text-align: center;
+border: 0.5px solid black;
+border-collapse: collapse;
+} 
+.anytable td{
+padding: 10px;
+text-align: center;
+border: 0.5px solid black;
+border-collapse: collapse;
+}
+.anytable tr{
+cursor: pointer;
 }
 .anytable tr:hover{
 background-color: #f5f5f5;
@@ -45,7 +145,7 @@ $database="Fantasyfootball";
                            echo "<script>alert(\"You need to choose 1 QB, 2 RB, 2 WR and 1 TE\"); </script>";
 		   }
 		   else{
-			   $Connection1=mysqli_connect("localhost","root","deepthi123") or die("Database connection failed. Please check your connection");
+			   $Connection1=mysqli_connect("127.0.0.1","root","storm123!") or die("Database connection failed. Please check your connection");
 			   #echo "Connected to Mariadb\n";
 			   mysqli_select_db($Connection1, $database) or die("Database not found");
 			   foreach($all_outputs as $pname){
@@ -69,13 +169,42 @@ $database="Fantasyfootball";
 <form action="" method="POST">
 <p>Please click here to draft the players</p>
 
+<label for="ptype">Choose Table to sort</label>
+
+<select name="ptype" id="ptype">
+  <option value="QB">QB</option>
+  <option value="RB">RB</option>
+  <option value="WR">WR</option>
+  <option value="TE">TE</option>
+
+</select>
+<label for="scol">Choose column to sort</label>
+
+<select name="scol" id="scol">
+<option value="PY">Passing Yards</option>
+                     <option value="PC">Passes Completed</option>
+                     <option value="AP">Attempted Passes</option>
+                     <option value="PP">Passes Percentage</option>
+                     <option value="RY"> Rushing Yards</option>
+                    <option value="RA"> Rushing Attempts</option>
+                    <option value="TA">Targets</option>
+                    <option value="RE">Receptions</option>
+                    <option value="RY">Receiving Yards</option>
+                     <option value="TO">Touch</option>
+                     <option value="FP"> Fantasy Points</option>
+
+</select>
+
+<button name="Sort" onclick="sort()">Click here to sort the table</button>
+</p>
+
 
 <?php		
 #only if Draft button is clicked
 $ptypes=array("QB", "RB", "WR", "TE");
 
 #echo "Attempting to connect to dbms\n";
-$Connection=mysqli_connect("localhost","root","deepthi123") or die("Database connection failed. Please check your connection");
+$Connection=mysqli_connect("127.0.0.1","root","storm123!") or die("Database connection failed. Please check your connection");
 #echo "Connected to Mariadb\n";
 mysqli_select_db($Connection, $database) or die("Database not found");
 #echo "Connected to database $database\n";
@@ -97,22 +226,24 @@ $output = mysqli_query($Connection, $selection_query);
    else{
 	   echo "<p>Player Type: $ptype</p>";
 echo "<table id=\"$ptype\" data-name=\"anytable\" class=\"anytable\"> 
-		<tr>
-		    <th>Select the player</th>
-		    <th> Player </th>
+<tr>
+<th>Select the player</th>
+                    <th> Player </th>
                     <th>Team</th>
-		    <th>Position</th>
-                     <th>Passing Yards</th>
-                     <th>Passes Completed</th>
-                     <th>Attempted Passes</th>
-                     <th>Passes Percentage</th>
-                     <th> Rushing Yards</th>
-                    <th> Rushing Attempts</th>
-                    <th>Targets</th>
-                    <th>Receptions</th>
-                    <th>Receiving Yards</th>
-                     <th>Touch</th>
-                     <th> Fantasy Points</th>
+                    <th>Position</th>
+
+<th id=\"PY\">Passing Yards</th>
+                     <th id=\"PC\">Passes Completed</th>
+                     <th id=\"AP\">Attempted Passes</th>
+                     <th id=\"PP\">Passes Percentage</th>
+                     <th id=\"RY\"> Rushing Yards</th>
+                    <th id=\"RA\"> Rushing Attempts</th>
+                    <th id=\"TA\">Targets</th>
+                    <th id=\"RE\">Receptions</th>
+                    <th id=\"RY\">Receiving Yards</th>
+                     <th id=\"TO\">Touch</th>
+                     <th id=\"FP\"> Fantasy Points</th>
+
                 </tr>";
    while($query_data=mysqli_fetch_array($output))
      {
@@ -217,6 +348,48 @@ document.getElementById("Reset").onclick = function(){
 	location.reload();		
 }*/
 </script>
+<script>
+function sort(n) {
+  var table_name, row_values, L, i, x, y, shouldChange, direction, count = 0;
+  table_selected = document.getElementById("ptype");
+  column_selected = document.getELementById("scol");
+  console.log(table_selected + column_selected);
+  //if 
+  table_name = document.getElementById(table_selected);
+  L = true;
+  direction = "asc";
+  while (l) {
+    L = false;
+    row_values = table_name.row_values;
+    for (i = 1; i < (row_values.length - 1); i++) {
+      shouldChange = false;
+      x = row_values[i].getElementsByTagName("TD")[n];
+      y = row_values[i + 1].getElementsByTagName("TD")[n];
+      if (direction == "desc") {
+		if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+          shouldChange = true;
+          break;
+        }
+      } else if (direction == "asc") {
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          shouldChange= true;
+          break;
+        }
+      }
+    }
+    if (shouldChange) {
+      row_values[i].parentNode.insertBefore(row_values[i + 1], row_values[i]);
+      L = true;
+      count ++;
+    } else {
+      if (count == 0 && direction == "asc") {
+        direction = "desc";
+        L = true;
+      }
+    }
+  }
+}
+</script>
+</script>
 </body>
 </html>
-
